@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
-import {
-  getAllProducts,
-  deleteProduct,
-  updateProduct,
-} from "../utils/api";
+import { getAllProducts, deleteProduct, updateProduct } from "../utils/api";
 
 const EditProducts = () => {
   const [products, setProducts] = useState([]);
