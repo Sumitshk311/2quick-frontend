@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import API_URL from '../api/api'; // ✅ ADD THIS
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import API_URL from "../utils/api"; // ✅ ONLY THIS
 
 const CategorySection = () => {
   const [categories, setCategories] = useState([]);
@@ -9,16 +9,14 @@ const CategorySection = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/categories`) // ✅ UPDATED
-      .then(res => {
-        console.log("Categories Response:", res.data);
+      .get(`${API_URL}/api/categories`)
+      .then((res) => {
         setCategories(res.data);
-        setLoading(false);
       })
-      .catch(err => {
-        console.error('Error fetching categories:', err);
-        setLoading(false);
-      });
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -35,26 +33,26 @@ const CategorySection = () => {
         Shop by Categories
       </h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
         {categories.map((cat) => (
           <Link
-            to={`/category/${cat.route}`}
             key={cat._id}
-            className="group border border-gray-200 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer bg-white overflow-hidden flex flex-col items-center p-4 text-center"
+            to={`/category/${cat.route}`}
+            className="group border rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 bg-white p-4 text-center"
           >
-            <div className="relative mb-3">
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="h-28 w-28 object-cover rounded-full border-4 border-green-100 group-hover:border-green-500 transition-colors duration-300"
-              />
-            </div>
-            <h3 className="font-semibold text-lg text-gray-800 mb-1">
+            <img
+              src={cat.image}
+              alt={cat.name}
+              className="h-28 w-28 mx-auto object-cover rounded-full border-4 border-green-100 group-hover:border-green-500 transition"
+            />
+            <h3 className="mt-4 font-semibold text-lg text-gray-800">
               {cat.name}
             </h3>
-            <p className="text-gray-600 text-sm hidden md:block">
-              {cat.description}
-            </p>
+            {cat.description && (
+              <p className="text-sm text-gray-600 mt-1 hidden md:block">
+                {cat.description}
+              </p>
+            )}
           </Link>
         ))}
       </div>
