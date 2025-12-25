@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import API_URL from "../utils/api"; // ✅ ONLY THIS
+import { API_URL } from "../utils/api"; // ✅ ONLY THIS
 
 const CategorySection = () => {
   const [categories, setCategories] = useState([]);

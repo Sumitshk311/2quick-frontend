@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import ProductCard from "./ProductCard";
-import API_URL from "../utils/api";
+import { API_URL } from "../utils/api";
 
 const FeaturedProducts = () => {
   const { addToCart, removeItem, cartItems } = useContext(CartContext);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import API_URL from "../utils/api";
+import { API_URL } from "../utils/api";
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
