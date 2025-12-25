@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import API_URL from "../api/api";
 
 const ProductManage = () => {
   const [products, setProducts] = useState([]);
@@ -8,10 +9,10 @@ const ProductManage = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get(`${API_URL}/api/products`);
       setProducts(response.data);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error("Error fetching products:", error);
     }
   };
 
@@ -34,30 +35,44 @@ const ProductManage = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/products/${editingProductId}`, editedProduct);
+      await axios.put(
+        `${API_URL}/api/products/${editingProductId}`,
+        editedProduct
+      );
       setEditingProductId(null);
       fetchProducts();
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error("Error updating product:", error);
     }
   };
 
   const toggleFeatured = async (id) => {
     try {
-      await axios.patch(`http://localhost:5000/api/products/toggle-featured/${id}`);
+      await axios.patch(
+        `${API_URL}/api/products/toggle-featured/${id}`
+      );
       fetchProducts();
     } catch (error) {
-      console.error('Error toggling featured:', error);
+      console.error("Error toggling featured:", error);
     }
   };
 
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6">Product Manager</h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div key={product._id} className="bg-white p-4 rounded-lg shadow-md border">
-            <img src={product.image} alt={product.name} className="h-32 w-full object-contain mb-2" />
+          <div
+            key={product._id}
+            className="bg-white p-4 rounded-lg shadow-md border"
+          >
+            <img
+              src={product.image}
+              alt={product.name}
+              className="h-32 w-full object-contain mb-2"
+            />
+
             <h3 className="text-lg font-semibold">{product.name}</h3>
             <p className="text-gray-600">Price: ₹{product.price}</p>
             <p className="text-gray-600">MRP: ₹{product.mrp}</p>
@@ -76,11 +91,12 @@ const ProductManage = () => {
               >
                 Edit
               </button>
+
               <button
                 onClick={() => toggleFeatured(product._id)}
                 className="flex-1 bg-yellow-400 text-black px-3 py-2 rounded hover:bg-yellow-500"
               >
-                {product.featured ? 'Unfeature' : 'Feature'}
+                {product.featured ? "Unfeature" : "Feature"}
               </button>
             </div>
 
@@ -92,7 +108,6 @@ const ProductManage = () => {
                   value={editedProduct.name}
                   onChange={handleInputChange}
                   className="w-full border p-2 rounded"
-                  placeholder="Product Name"
                 />
                 <input
                   type="number"
@@ -100,7 +115,6 @@ const ProductManage = () => {
                   value={editedProduct.price}
                   onChange={handleInputChange}
                   className="w-full border p-2 rounded"
-                  placeholder="Price"
                 />
                 <input
                   type="number"
@@ -108,7 +122,6 @@ const ProductManage = () => {
                   value={editedProduct.mrp}
                   onChange={handleInputChange}
                   className="w-full border p-2 rounded"
-                  placeholder="MRP"
                 />
                 <input
                   type="text"
@@ -116,8 +129,8 @@ const ProductManage = () => {
                   value={editedProduct.unit}
                   onChange={handleInputChange}
                   className="w-full border p-2 rounded"
-                  placeholder="Unit"
                 />
+
                 <button
                   onClick={handleSave}
                   className="w-full bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600"

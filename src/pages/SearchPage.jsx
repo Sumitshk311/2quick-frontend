@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import API_URL from "../utils/api";
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
@@ -12,7 +13,7 @@ const SearchPage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5000/api/products");
+        const res = await fetch(`${API_URL}/api/products`);
         const data = await res.json();
         setAllProducts(data);
       } catch (err) {

@@ -4,6 +4,9 @@ import ProductCard from "../components/ProductCard";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
 
+// ✅ API base URL from env (same as api.js)
+const API_URL = import.meta.env.VITE_API_URL;
+
 const categoryBanners = {
   default: "https://via.placeholder.com/1200x300?text=Category+Banner",
 };
@@ -34,18 +37,20 @@ const CategoryPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [productsInCategory, setProductsInCategory] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentCategoryBanner, setCurrentCategoryBanner] = useState(
     categoryBanners.default
   );
   const [sortBy, setSortBy] = useState("default");
-  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const { addToCart, removeItem, cartItems } = useContext(CartContext);
 
+  // ✅ Fetch products
   useEffect(() => {
     setLoading(true);
+
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${API_URL}/api/products`)
       .then((res) => {
         const allProducts = res.data;
 
@@ -68,33 +73,39 @@ const CategoryPage = () => {
       });
   }, [categoryName]);
 
+  // ✅ Sorting logic (same as before)
   useEffect(() => {
     let sorted = [...productsInCategory];
+
     if (sortBy === "price-low-to-high") {
       sorted.sort((a, b) => a.price - b.price);
     } else if (sortBy === "price-high-to-low") {
       sorted.sort((a, b) => b.price - a.price);
     }
+
     setFilteredProducts(sorted);
   }, [sortBy, productsInCategory]);
 
   return (
     <div className="bg-gradient-to-b from-white to-gray-100 min-h-screen pt-0 md:pt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        {/* Header + Sort */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 bg-white p-4 rounded-xl shadow-md border border-gray-100">
           <nav className="text-sm text-gray-600 mb-4 sm:mb-0">
-            <Link to="/" className="hover:underline text-green-600 transition-colors">
+            <Link to="/" className="hover:underline text-green-600">
               Home
             </Link>
             <span className="mx-2">/</span>
-            <span className="font-semibold text-gray-800">{displayCategoryName}</span>
+            <span className="font-semibold text-gray-800">
+              {displayCategoryName}
+            </span>
           </nav>
 
           <div className="flex items-center space-x-2 text-gray-700 font-medium">
             <span>Sort By:</span>
             <select
-              className="ml-2 border border-gray-300 rounded-lg py-2 px-3 focus:ring-green-500 focus:border-green-500 text-sm md:text-base cursor-pointer
-                         hover:border-green-400 transition-colors duration-200 appearance-none bg-white pr-8"
+              className="ml-2 border border-gray-300 rounded-lg py-2 px-3 focus:ring-green-500 focus:border-green-500 text-sm md:text-base cursor-pointer"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
@@ -105,10 +116,11 @@ const CategoryPage = () => {
           </div>
         </div>
 
+        {/* Content */}
         {loading ? (
           <div className="text-center py-20 bg-white rounded-xl shadow-md">
             <div
-              className="loader ease-linear rounded-full border-8 border-t-8 border-green-200 h-24 w-24 mb-4 mx-auto"
+              className="loader rounded-full border-8 border-green-200 h-24 w-24 mx-auto"
               style={{ borderTopColor: "#10B981" }}
             ></div>
             <p className="text-xl text-gray-600 font-semibold mt-4">
@@ -129,13 +141,15 @@ const CategoryPage = () => {
           </div>
         ) : (
           <div className="text-center py-10 bg-white rounded-xl shadow-md p-8">
-            <p className="text-2xl font-bold text-gray-700 mb-4">Oops! No products found.</p>
+            <p className="text-2xl font-bold text-gray-700 mb-4">
+              Oops! No products found.
+            </p>
             <p className="text-lg text-gray-600 mb-6">
-              It looks like there are no items in the "{displayCategoryName}" category yet.
+              "{displayCategoryName}" category mein abhi products nahi hain.
             </p>
             <Link
               to="/"
-              className="inline-block bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-colors duration-200 font-semibold shadow-md"
+              className="inline-block bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 font-semibold"
             >
               Explore Other Categories
             </Link>

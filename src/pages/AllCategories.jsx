@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-// Utility to convert category name to URL-friendly slug
-const slugify = (text) =>
-  text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+// ✅ CENTRAL API URL
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AllCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -17,7 +10,7 @@ const AllCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/categories");
+        const res = await fetch(`${API_URL}/api/categories`);
         const data = await res.json();
         setCategories(data);
       } catch (err) {

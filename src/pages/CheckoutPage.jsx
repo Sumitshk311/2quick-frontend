@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const CheckoutPage = () => {
   const { cartItems, getTotalCartItems, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
@@ -31,50 +33,50 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-  const { name, phone, address, landmark, city, paymentMethod } = formData;
+    const { name, phone, address, landmark, city, paymentMethod } = formData;
 
-  if (!name || !phone || !address || !landmark) {
-    setError("Please fill in all required fields.");
-    return;
-  }
+    if (!name || !phone || !address || !landmark) {
+      setError("Please fill in all required fields.");
+      return;
+    }
 
-  const orderPayload = {
-    customer: { name, phone, city, address, landmark, paymentMethod },
-    items: cartItems.map((item) => ({
-      productId: item._id,
-      name: item.name,
-      quantity: item.quantity,
-      price: item.price,
-      unit: item.unit,
-      image: item.image,
-    })),
-    subtotal,
-    deliveryCharges,
-    total,
+    const orderPayload = {
+      customer: { name, phone, city, address, landmark, paymentMethod },
+      items: cartItems.map((item) => ({
+        productId: item._id,
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        unit: item.unit,
+        image: item.image,
+      })),
+      subtotal,
+      deliveryCharges,
+      total,
+    };
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(`${API_URL}/api/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+
+      if (!response.ok) throw new Error("Failed to place order");
+
+      localStorage.setItem("userPhone", phone); // ✅ same as before
+
+      clearCart();
+      navigate("/thank-you");
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
-
-  try {
-    setLoading(true);
-
-    const response = await fetch("http://localhost:5000/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderPayload),
-    });
-
-    if (!response.ok) throw new Error("Failed to place order");
-
-    localStorage.setItem("userPhone", phone);  // ✅ Yahi important hai
-
-    clearCart();
-    navigate("/thank-you");
-  } catch (err) {
-    console.error(err);
-    setError("Something went wrong. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
 
   return (
     <section className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">

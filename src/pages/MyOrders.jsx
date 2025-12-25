@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +18,9 @@ const MyOrders = () => {
 
     const fetchOrders = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/orders/user/${email}`);
+        const res = await fetch(
+          `${API_URL}/api/orders/user/${email}`
+        );
         const data = await res.json();
         setOrders(data);
       } catch (err) {
@@ -27,7 +31,7 @@ const MyOrders = () => {
     };
 
     fetchOrders();
-    const interval = setInterval(fetchOrders, 5000); // Refresh every 5s
+    const interval = setInterval(fetchOrders, 5000); // auto refresh
 
     return () => clearInterval(interval);
   }, []);

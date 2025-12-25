@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import API_URL from "../utils/api";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchOrders = () => {
-    fetch(`http://localhost:5000/api/orders`)
+    fetch(`${API_URL}/api/orders`)
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.error(err))
@@ -31,7 +32,7 @@ const AdminOrders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/${orderId}`, {
+      const response = await fetch(`${API_URL}/api/orders/${orderId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
