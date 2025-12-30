@@ -1,5 +1,6 @@
 // Export API_URL as a named export
-export const API_URL = import.meta.env.VITE_API_URL;
+export const API_URL = "https://twoquick-backend.onrender.com";
+
 
 // Products
 export const getAllProducts = () =>
@@ -48,3 +49,7 @@ export const loginUser = (data) =>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+
+
+  
+// export default API_URL;
