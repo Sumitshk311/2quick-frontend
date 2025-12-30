@@ -46,9 +46,9 @@ export default function WhyChoose() {
 
         {/* Top Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {topFeatures.map((item, i) => (
+          {topFeatures.map((item, index) => (
             <div
-            //   key={i}
+              key={index}
               className="bg-white rounded-2xl p-6 text-center shadow hover:shadow-lg transition"
             >
               <div className="w-14 h-14 mx-auto mb-4 flex items-center justify-center rounded-full bg-green-100 text-2xl">

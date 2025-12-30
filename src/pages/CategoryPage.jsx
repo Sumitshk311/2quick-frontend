@@ -38,9 +38,6 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [productsInCategory, setProductsInCategory] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [currentCategoryBanner, setCurrentCategoryBanner] = useState(
-    categoryBanners.default
-  );
   const [sortBy, setSortBy] = useState("default");
 
   const { addToCart, removeItem, cartItems } = useContext(CartContext);
@@ -61,9 +58,6 @@ const CategoryPage = () => {
 
         setProductsInCategory(filtered);
         setFilteredProducts(filtered);
-        setCurrentCategoryBanner(
-          categoryBanners[categoryName] || categoryBanners.default
-        );
         setSortBy("default");
         setLoading(false);
       })
