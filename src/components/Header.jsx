@@ -34,7 +34,7 @@ const Header = () => {
             <img
               src={logo}
               alt="2Quick Logo"
-              className="h-12 md:h-14 w-auto object-contain"
+              className="h-15px md:h-56px w-auto object-contain"
             />
           </Link>
         </h1>
