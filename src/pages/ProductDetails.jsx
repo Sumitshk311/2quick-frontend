@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { FaShoppingCart, FaTrash } from 'react-icons/fa';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://twoquick-backend1.onrender.com";
 
 const ProductDetails = () => {
   const { id } = useParams();

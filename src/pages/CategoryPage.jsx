@@ -5,7 +5,7 @@ import { CartContext } from "../context/CartContext";
 import axios from "axios";
 
 // ✅ API base URL from env (same as api.js)
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://twoquick-backend1.onrender.com";
 
 const categoryBanners = {
   default: "https://via.placeholder.com/1200x300?text=Category+Banner",

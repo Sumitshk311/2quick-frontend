@@ -4,7 +4,7 @@ import { CartContext } from "../context/CartContext";
 import ProductCard from "../components/ProductCard";
 
 // ✅ API base URL (same as api.js pattern)
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://twoquick-backend1.onrender.com";
 
 const Products = () => {
   const { addToCart, removeItem, cartItems } = useContext(CartContext);
