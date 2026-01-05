@@ -31,7 +31,11 @@ const Header = () => {
         {/* Logo */}
         <h1 className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
           <Link to="/">
-            <img src={logo} alt="2Quick Logo" className="h-10 w-auto" />
+            <img
+              src={logo}
+              alt="2Quick Logo"
+              className="h-12 md:h-14 w-auto object-contain"
+            />
           </Link>
         </h1>
 
@@ -64,10 +68,18 @@ const Header = () => {
           <FaTimes />
         </button>
         <nav className="flex flex-col space-y-4">
-          <Link to="/" onClick={toggleMobileMenu}>Home</Link>
-          <Link to="/products" onClick={toggleMobileMenu}>Products</Link>
-          <Link to="/about" onClick={toggleMobileMenu}>About</Link>
-          <Link to="/contact" onClick={toggleMobileMenu}>Contact</Link>
+          <Link to="/" onClick={toggleMobileMenu}>
+            Home
+          </Link>
+          <Link to="/products" onClick={toggleMobileMenu}>
+            Products
+          </Link>
+          <Link to="/about" onClick={toggleMobileMenu}>
+            About
+          </Link>
+          <Link to="/contact" onClick={toggleMobileMenu}>
+            Contact
+          </Link>
         </nav>
       </div>
 
