@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import ProductCard from "../components/ProductCard";
 
-// ✅ API base URL (same as api.js pattern)
+// 🔥 FIXED: Only TwoQuick backend
 const API_URL = "https://twoquick-backend1.onrender.com";
 
 const Products = () => {
@@ -13,33 +13,31 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [categories, setCategories] = useState(["All"]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [categories, setCategories] = useState(["All"]);
 
+  // 🚀 Fetch Products
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${API_URL}/api/products`);
+        const res = await fetch(`${API_URL}/api/products`);
+        if (!res.ok) throw new Error("Failed to fetch products");
+        const data = await res.json();
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
         setProducts(data);
 
-        // ✅ Extract unique categories
-        const rawCategories = [
-          ...new Set(data.map((product) => product.category)),
-        ].filter(Boolean);
+        const uniqueCategories = [
+          "All",
+          ...new Set(data.map((p) => p.category).filter(Boolean)),
+        ];
 
-        setCategories(["All", ...rawCategories]);
+        setCategories(uniqueCategories);
       } catch (err) {
-        console.error("Error fetching products:", err);
-        setError("Failed to load products. Please try again later.");
+        console.error(err);
+        setError("Failed to load products. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -48,29 +46,24 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  // 🎯 Filter by Category
   useEffect(() => {
-    const categoryParam = searchParams.get("category") || "All";
-    setSelectedCategory(categoryParam);
+    const category = searchParams.get("category") || "All";
+    setSelectedCategory(category);
 
-    if (products.length > 0) {
-      if (categoryParam === "All") {
-        setFilteredProducts(products);
-      } else {
-        setFilteredProducts(
-          products.filter(
-            (product) =>
-              product.category?.toLowerCase() ===
-              categoryParam.toLowerCase()
-          )
-        );
-      }
+    if (category === "All") {
+      setFilteredProducts(products);
     } else {
-      setFilteredProducts([]);
+      setFilteredProducts(
+        products.filter(
+          (p) =>
+            p.category?.toLowerCase() === category.toLowerCase()
+        )
+      );
     }
   }, [products, searchParams]);
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
     if (category === "All") {
       setSearchParams({});
     } else {
@@ -78,29 +71,28 @@ const Products = () => {
     }
   };
 
-  // 🔄 Loading State
+  // 🔄 Loading
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)] bg-gray-50">
-        <div className="loader ease-linear rounded-full border-8 border-t-8 border-emerald-500 h-20 w-20 animate-spin mb-4"></div>
-        <p className="text-xl text-gray-700 font-semibold">
-          Loading Products...
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="w-14 h-14 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-gray-600 font-medium tracking-wide">
+          Fetching fresh products…
         </p>
-        <style>{`
-          .loader { border-top-color: #10B981; }
-        `}</style>
       </div>
     );
   }
 
-  // ❌ Error State
+  // ❌ Error
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)] bg-red-50 text-red-700 font-semibold text-center p-4">
-        <p className="text-xl">{error}</p>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] bg-red-50">
+        <p className="text-red-700 text-lg font-semibold mb-4">
+          {error}
+        </p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-6 bg-red-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition"
+          className="bg-red-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition"
         >
           Retry
         </button>
@@ -109,42 +101,52 @@ const Products = () => {
   }
 
   return (
-    <section className="bg-gradient-to-br from-gray-50 to-white min-h-screen py-6 md:pt-20">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <section className="bg-gradient-to-br from-gray-50 to-white min-h-screen pt-4 md:pt-20">
+      <div className="max-w-7xl mx-auto px-4">
 
-        {/* 🔘 Category Buttons */}
-        <div className="flex overflow-x-auto gap-3 pb-3 no-scrollbar">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => handleCategoryClick(category)}
-              className={`px-4 py-2 rounded-full font-semibold transition
-                ${
-                  selectedCategory.toLowerCase() === category.toLowerCase()
-                    ? "bg-emerald-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-            >
-              {category}
-            </button>
-          ))}
+        {/* 🔘 Premium Category Bar */}
+        <div className="sticky top-14 z-30 bg-white/80 backdrop-blur-md py-3 mb-4">
+          <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory">
+            {categories.map((category) => {
+              const active =
+                selectedCategory.toLowerCase() === category.toLowerCase();
+
+              return (
+                <button
+                  key={category}
+                  onClick={() => handleCategoryClick(category)}
+                  className={`snap-start whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300
+                    ${
+                      active
+                        ? "bg-emerald-600 text-white shadow-lg scale-105"
+                        : "bg-gray-100 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
+                    }`}
+                >
+                  {category}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* 🛍 Product Grid */}
+        {/* 🛍 Products Grid */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl shadow">
-            <p className="text-xl font-semibold text-gray-600">
-              No products found in "{selectedCategory}"
+          <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
+            <p className="text-lg font-semibold text-gray-700 mb-4">
+              No products found in{" "}
+              <span className="text-emerald-600">
+                {selectedCategory}
+              </span>
             </p>
             <button
               onClick={() => handleCategoryClick("All")}
-              className="mt-5 bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-emerald-700"
+              className="bg-emerald-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-emerald-700 transition"
             >
-              Show All Products
+              View All Products
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-10">
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product._id}

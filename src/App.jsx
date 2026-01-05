@@ -48,9 +48,14 @@ function App() {
             <Route path="/admin/offer" element={<AdminOffer />} />
             <Route path="/admin/products/edit/:id" element={<EditProduct />} />
             <Route path="/admin/order" element={<Order />} />
-            <Route path="/admin/settings" element={<AdminRoute>
-                    <AdminSettings />
-                </AdminRoute>}/>
+            <Route
+              path="/admin/settings"
+              element={
+                <AdminRoute>
+                  <AdminSettings />
+                </AdminRoute>
+              }
+            />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/thank-you" element={<ThankYouPage />} />
             <Route path="/profile" element={<Profile />} />
@@ -58,12 +63,22 @@ function App() {
             <Route path="/categories" element={<AllCategories />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </main>
         <FreeDeliveryBanner />
-        <WhatsappButton phoneNumber="917522074547" message="Hello! I have a question about your website." />
-            <ActionBar />
+        <WhatsappButton
+          phoneNumber="917522074547"
+          message="Hello! I have a question about your website."
+        />
+        <ActionBar />
         <Footer />
       </CartProvider>
     </BrowserRouter>
