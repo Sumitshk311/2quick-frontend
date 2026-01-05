@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // ✅ CENTRAL API URL
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://twoquick-backend1.onrender.com";
 
 const AllCategories = () => {
   const [categories, setCategories] = useState([]);
