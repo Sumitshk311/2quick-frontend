@@ -1,5 +1,5 @@
 // Export API_URL as a named export
-export const API_URL = "https://twoquick-backend.onrender.com";
+export const API_URL = "https://twoquick-backend1.onrender.com";
 
 
 // Products
