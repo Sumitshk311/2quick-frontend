@@ -43,14 +43,15 @@ const OfferToggleBanner = () => {
         {/* Rotated Button */}
         {!isOpen && (
           <button
-            onClick={() => setIsOpen(true)}
             className="
-              bg-gradient-to-r from-emerald-500 to-green-500
-              text-white px-5 py-3 font-semibold shadow-lg
-              rounded-tl-lg rounded-bl-lg
-              transform rotate-90 origin-right
-              hover:opacity-90 transition-all
-            "
+    bg-green-500 text-white font-semibold
+    px-3 py-4
+    rounded-l-xl
+    shadow-lg
+    writing-mode-vertical
+    rotate-180
+    text-sm
+  "
           >
             Free Delivery
           </button>
