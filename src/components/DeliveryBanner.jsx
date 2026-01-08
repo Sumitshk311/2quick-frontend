@@ -14,8 +14,6 @@ const OfferToggleBanner = () => {
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
@@ -34,35 +32,58 @@ const OfferToggleBanner = () => {
         `}
       </style>
 
-      <div className="fixed bottom-24 right-4 z-50 flex flex-col items-end">
-
-        {/* Rotated Offer Button */}
+      <div
+        className="
+          fixed z-50 flex flex-col items-end
+          bottom-[190px]
+          left-1/2 -translate-x-1/2
+          md:left-auto md:translate-x-0 md:right-4 md:bottom-24
+        "
+      >
+        {/* Rotated Button */}
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="bg-gradient-to-r from-emerald-500 to-green-500 text-white px-5 py-3 rounded-tl-lg rounded-bl-lg shadow-lg font-semibold hover:opacity-90 transition-all origin-right transform rotate-90"
+            className="
+              bg-gradient-to-r from-emerald-500 to-green-500
+              text-white px-5 py-3 font-semibold shadow-lg
+              rounded-tl-lg rounded-bl-lg
+              transform rotate-90 origin-right
+              hover:opacity-90 transition-all
+            "
           >
             Free Delivery
           </button>
         )}
 
-        {/* Offer Banner */}
+        {/* Banner */}
         {isOpen && (
           <div
             ref={bannerRef}
-            className="w-72 bg-gradient-to-br from-emerald-500 to-green-500 text-white p-6 rounded-xl shadow-2xl relative animate-slideIn"
+            className="
+              w-72 bg-gradient-to-br from-emerald-500 to-green-500
+              text-white p-6 rounded-xl shadow-2xl
+            "
             style={{ animation: "slideIn 0.3s ease-out" }}
           >
-            <h2 className="text-xl font-bold mb-2 text-center tracking-wide">FREE DELIVERY</h2>
-            <p className="text-sm text-center mb-4">on orders above ₹499</p>
+            <h2 className="text-xl font-bold mb-2 text-center">
+              FREE DELIVERY
+            </h2>
+            <p className="text-sm text-center mb-4">
+              on orders above ₹499
+            </p>
 
-            <button className="w-full bg-white text-green-600 hover:bg-gray-100 py-2 rounded-md font-semibold transition-colors">
+            <button className="w-full bg-white text-green-600 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors">
               Shop Now
             </button>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute -left-3 top-1/2 transform -translate-y-1/2 bg-white text-green-600 px-2 py-1 rounded-full shadow hover:bg-gray-100"
+              className="
+                absolute -left-3 top-1/2 -translate-y-1/2
+                bg-white text-green-600 px-2 py-1
+                rounded-full shadow hover:bg-gray-100
+              "
               aria-label="Close banner"
             >
               &lt;
