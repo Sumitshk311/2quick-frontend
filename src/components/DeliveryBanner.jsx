@@ -34,11 +34,11 @@ const OfferToggleBanner = () => {
 
       <div
         className="
-          fixed z-50 flex flex-col items-end
-          bottom-[190px]
-          left-1/2 -translate-x-1/2
-          md:left-auto md:translate-x-0 md:right-4 md:bottom-24
-        "
+    fixed z-40 flex flex-col items-end
+    right-0
+    bottom-[160px]
+    md:right-4 md:bottom-24
+  "
       >
         {/* Rotated Button */}
         {!isOpen && (
@@ -69,9 +69,7 @@ const OfferToggleBanner = () => {
             <h2 className="text-xl font-bold mb-2 text-center">
               FREE DELIVERY
             </h2>
-            <p className="text-sm text-center mb-4">
-              on orders above ₹499
-            </p>
+            <p className="text-sm text-center mb-4">on orders above ₹499</p>
 
             <button className="w-full bg-white text-green-600 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors">
               Shop Now

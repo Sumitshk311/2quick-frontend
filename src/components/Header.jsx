@@ -16,7 +16,6 @@ const Header = () => {
       {/* HEADER */}
       <header className="fixed top-0 left-0 w-full bg-gradient-to-br from-green-800 via-green-600 to-lime-500 text-white shadow-lg z-50">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(true)}
@@ -30,7 +29,7 @@ const Header = () => {
             <img
               src={logo}
               alt="2Quick Logo"
-              className="h-10 md:h-14 w-auto object-contain"
+              className="h-12 md:h-16 w-auto object-contain"
             />
           </Link>
 
@@ -68,10 +67,18 @@ const Header = () => {
         </button>
 
         <nav className="flex flex-col space-y-4 text-lg">
-          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-          <Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>Products</Link>
-          <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-          <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+            Home
+          </Link>
+          <Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>
+            Products
+          </Link>
+          <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
+            About
+          </Link>
+          <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+            Contact
+          </Link>
         </nav>
       </div>
 
