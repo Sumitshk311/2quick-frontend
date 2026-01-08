@@ -29,7 +29,7 @@ const Header = () => {
             <img
               src={logo}
               alt="2Quick Logo"
-              className="h-12 md:h-16 w-auto object-contain"
+              className="h-16 md:h-17 w-auto object-contain"
             />
           </Link>
 
