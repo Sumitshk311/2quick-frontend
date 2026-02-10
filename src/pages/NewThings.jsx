@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function NewThings() {
+  const navigate = useNavigate();
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-green-50 via-white to-green-100">
 
@@ -30,23 +34,26 @@ export default function NewThings() {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-5">
-          <button onClick={"/products"} className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full bg-green-600 text-white font-bold text-lg shadow-[0_20px_50px_rgba(34,197,94,0.4)] hover:bg-green-700 transition-all hover:scale-105">
+
+          {/* Start Shopping */}
+          <button
+            onClick={() => navigate("/products")}
+            className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full bg-green-600 text-white font-bold text-lg shadow-[0_20px_50px_rgba(34,197,94,0.4)] hover:bg-green-700 transition-all hover:scale-105"
+          >
             🛒 Start Shopping
             <span className="text-xl">→</span>
           </button>
 
-          <button onClick={"/categories"} className="px-10 py-4 rounded-full bg-white border border-green-300 text-green-700 font-bold text-lg hover:bg-green-100 transition-all hover:scale-105 shadow-md">
+          {/* Browse Categories */}
+          <button
+            onClick={() => navigate("/categories")}
+            className="px-10 py-4 rounded-full bg-white border border-green-300 text-green-700 font-bold text-lg hover:bg-green-100 transition-all hover:scale-105 shadow-md"
+          >
             Browse Categories
           </button>
+
         </div>
 
-        {/* Trust Badges */}
-        {/* <div className="mt-12 flex flex-wrap justify-center gap-8 text-sm font-semibold text-gray-500">
-          <div className="flex items-center gap-2">🥬 Fresh & Organic</div>
-          <div className="flex items-center gap-2">⚡ 30 Min Delivery</div>
-          <div className="flex items-center gap-2">💳 Secure Payments</div>
-          <div className="flex items-center gap-2">⭐ 10K+ Happy Customers</div>
-        </div> */}
       </div>
 
       {/* Soft radial background */}
