@@ -15,7 +15,7 @@ import ThankYouPage from "./pages/ThankYouPage";
 import MyOrders from "./pages/MyOrders";
 import ActionBar from "./components/ActionBar";
 import ScrollToTop from "./components/ScrollToTop";
-import Profile from "./pages/ProfilePage";
+import Profile from "./pages/Profile";
 import AllCategories from "./pages/AllCategories";
 import AboutUs from "./pages/AboutUs";
 import SearchPage from "./pages/SearchPage";
