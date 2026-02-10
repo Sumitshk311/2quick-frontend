@@ -10,6 +10,7 @@ import HowItWorks from '../components/HowItWorks';
 import NewThings from './NewThings';
 import WhyChoose from '../components/WhyChoose';
 import OfferSlider from '../components/OfferSlider';
+import DesignerCredit from '../components/DesignerCredit';
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <HowItWorks/>
       <OfferSlider/>
       <WhyChooseUs />
+      <DesignerCredit />
       <ScrollToTopButton />
     </div>
   );
